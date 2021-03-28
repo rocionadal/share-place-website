@@ -28,5 +28,12 @@ export class Modal {
     }
   }
 
-  hide() {}
+  hide() {
+    if (this.modalElement) {
+      document.body.removeChild(this.modalElement);
+      document.body.removeChild(this.backdropElement);
+      this.modalElement = null; // for js to clean them out and do not take await space in memory
+      this.backdropElement = null;
+    }
+  }
 }
