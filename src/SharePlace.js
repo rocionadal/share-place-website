@@ -2,22 +2,24 @@ import { Modal } from './UI/Modal';
 import { Map } from './UI/Map';
 import { getCoordsFromAddress } from './Utility/Location';
 
-
 class PlaceFinder {
   constructor() {
     const addressForm = document.querySelector('form');
     const locateUserBtn = document.getElementById('locate-btn');
-    
+    this.shareBtn = document.getElementById('share-btn');
     locateUserBtn.addEventListener('click', this.locateUserHandler.bind(this));
     addressForm.addEventListener('submit', this.findAddressHandler.bind(this));
   }
-
+  
   selectPlace(coordinates) {
     if (this.map) {
       this.map.render(coordinates);
     } else {
       this.map = new Map(coordinates);
     }
+    this.shareBtn.disabled = false;
+    const sharedLinkInputElement = document.getElementById('share-link');
+    sharedLinkInputElement.value = `${location.origin}/my-place?lat=${coordinates.lat}&lng=${coordinates.lng}`;
   }
 
   locateUserHandler() {
